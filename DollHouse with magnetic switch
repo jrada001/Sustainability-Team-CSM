@@ -9,6 +9,8 @@
 // digital pin 2 and 3 has a magnetic switch or pushbutton attached to it. Give it a name:
 int mag_switch1 = 2;
 int mag_switch2 = 3;
+int mag_switch3 = 4;
+int mag_switch4 = 5;
 
 // the setup routine runs once when you press reset:
 void setup() {
@@ -17,6 +19,8 @@ void setup() {
   // make the switchs pin an input:
   pinMode(mag_switch1, INPUT_PULLUP);
   pinMode(mag_switch2, INPUT_PULLUP);
+  pinMode(mag_switch3, INPUT_PULLUP);
+  pinMode(mag_switch4, INPUT_PULLUP);
 }
 
 // the loop routine runs over and over again forever:
@@ -24,11 +28,19 @@ void loop() {
   // read the input pin 2 and 3:
   int mag_switch1_state = digitalRead(mag_switch1);
   int mag_switch2_state = digitalRead(mag_switch2);
+  int mag_switch3_state = digitalRead(mag_switch3);
+  int mag_switch4_state = digitalRead(mag_switch4);
   // print out the state of the button:
-  Serial.print("SWITCH 1: ");
+  Serial.print("small WASHER: ");
   Serial.println(mag_switch1_state);
-  delay(200);  // delay in between reads for stability
-  Serial.print("SWITCH 2: ");
+  delay(500);  // delay in between reads for stability
+  Serial.print("BIG WASHER: ");
   Serial.println(mag_switch2_state);
-  delay(200);
+  delay(500);
+  Serial.print("GARAGE: ");
+  Serial.println(mag_switch3_state);
+  delay(500);
+    Serial.print("KITCHEN: ");
+  Serial.println(mag_switch4_state);
+  delay(500);
 }
