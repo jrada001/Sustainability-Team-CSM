@@ -1,29 +1,49 @@
 //int buttonState = 0;
 
-int b1State = 0;
+int switchKitchenState = 0;
+int switchGarageState = 0;
+int switchLaundryState = 0;
+int switchHeaterState = 0;
 
 //const byte B_1 = 0b1000;
 //const byte B_2 = 0b0100;
 //const byte B_3 = 0b0010;
 //const byte B_4 = 0b0001;
 
-String StrB1_L = "1000.1000";
-String StrB1_H = "0000.0000";
+String StrB1_L = "KITCHEN_RED";
+String StrB1_H = "KITCHEN_GREEN";
+String StrB2_L = "GARAGE_RED";
+String StrB2_H = "GARAGE_GREEN";
+String StrB3_L = "LAUNDRY_RED";
+String StrB3_H = "LAUNDRY_GREEN";
+String StrB4_L = "HEATER_RED";
+String StrB4_H = "HEATER_GREEN";
 
 String b1StateStr;
+String b2StateStr;
+String b3StateStr;
+String b4StateStr;
 
 void setup()
 {
-  pinMode(2, INPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
-  Serial.begin(9600);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);
+  pinMode(4, INPUT_PULLUP);
+  pinMode(5, INPUT_PULLUP);
+
+Serial.begin(9600);
+
 }
 
 void loop()
 {
-  // read the state of the pushbutton value
+  // read the state of the pushbutton(magneticSwitch) value
   int b1State = digitalRead(2);
-  // check if pushbutton is pressed.  if it is, the
+  int b2State = digitalRead(3);
+  int b3State = digitalRead(4);
+  int b4State = digitalRead(5);
+
+  // check if pushbutton is pressed (or switch turned on).  if it is, the
   // buttonState is HIGH
   
   if (b1State == HIGH) 
@@ -31,22 +51,32 @@ void loop()
   else 
     b1StateStr = StrB1_L;
   
-  Serial.print("Btn1: ");
+  Serial.print("KITCHEN: ");
   Serial.println(b1StateStr);
-  //  digitalWrite(LED_BUILTIN, HIGH);
-  //} else {
-    // turn LED off
-  //  digitalWrite(LED_BUILTIN, LOW);
-  //}
-  //digitalWrite(LED_BUILTIN, buttonState);
-  //erial.print("Pin2: ");
-  //Serial.println(B_2);
-  //if (buttonState == HIGH) {
-    // turn LED on
-  //  digitalWrite(LED_BUILTIN, HIGH);
-  //} else {
-    // turn LED off
-  //  digitalWrite(LED_BUILTIN, LOW);
-  //}
-  delay(500); // Delay a little bit to improve simulation performance
+
+  if (b2State == HIGH) 
+    b2StateStr = StrB2_H;
+  else 
+    b2StateStr = StrB2_L;
+  
+  Serial.print("Garage: ");
+  Serial.println(b2StateStr);
+
+    if (b3State == HIGH) 
+    b3StateStr = StrB3_H;
+  else 
+    b3StateStr = StrB3_L;
+  
+  Serial.print("Laundry: ");
+  Serial.println(b3StateStr);
+
+    if (b4State == HIGH) 
+    b4StateStr = StrB4_H;
+  else 
+    b4StateStr = StrB4_L;
+  
+  Serial.print("Heater: ");
+  Serial.println(b4StateStr);
+  
+   delay(250); // Delay a little bit to improve simulation performance
 }
