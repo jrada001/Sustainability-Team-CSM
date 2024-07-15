@@ -1,0 +1,52 @@
+//int buttonState = 0;
+
+int b1State = 0;
+
+//const byte B_1 = 0b1000;
+//const byte B_2 = 0b0100;
+//const byte B_3 = 0b0010;
+//const byte B_4 = 0b0001;
+
+String StrB1_L = "1000.1000";
+String StrB1_H = "0000.0000";
+
+String b1StateStr;
+
+void setup()
+{
+  pinMode(2, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  // read the state of the pushbutton value
+  int b1State = digitalRead(2);
+  // check if pushbutton is pressed.  if it is, the
+  // buttonState is HIGH
+  
+  if (b1State == HIGH) 
+    b1StateStr = StrB1_H;
+  else 
+    b1StateStr = StrB1_L;
+  
+  Serial.print("Btn1: ");
+  Serial.println(b1StateStr);
+  //  digitalWrite(LED_BUILTIN, HIGH);
+  //} else {
+    // turn LED off
+  //  digitalWrite(LED_BUILTIN, LOW);
+  //}
+  //digitalWrite(LED_BUILTIN, buttonState);
+  //erial.print("Pin2: ");
+  //Serial.println(B_2);
+  //if (buttonState == HIGH) {
+    // turn LED on
+  //  digitalWrite(LED_BUILTIN, HIGH);
+  //} else {
+    // turn LED off
+  //  digitalWrite(LED_BUILTIN, LOW);
+  //}
+  delay(500); // Delay a little bit to improve simulation performance
+}
