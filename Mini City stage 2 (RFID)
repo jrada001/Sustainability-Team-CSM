@@ -46,12 +46,12 @@ byte ssPins[] = {SS_1_PIN, SS_2_PIN, SS_3_PIN, SS_4_PIN, SS_5_PIN, SS_6_PIN};
 
 MFRC522 mfrc522[NR_OF_READERS];   // Create MFRC522 instance.
 
-const int RELAY1 = 8;
-const int RELAY2 = 9;
-const int RELAY3 = 10;
-const int RELAY4 = 11;
-const int RELAY5 = 12;
-const int RELAY6 = 13;
+const int RELAY4_4 = 8;
+const int RELAY4_3 = 9;
+const int RELAY4_2 = 10;
+const int RELAY4_1 = 11; //connected
+const int RELAY_R = 12; //connected
+const int RELAY_L = 13; //connected
 
 byte PICC_CARD1[4] = {99, 90, 150, 13};
 byte PICC_CARD2[4] = {115, 181, 132, 13};
@@ -65,8 +65,8 @@ byte PICC_CARD9[4] = {147, 85, 37, 18};
 byte PICC_CARD10[4] = {115, 70, 48, 16};
 byte PICC_CARD11[4] = {179, 39, 96, 16};
 
-byte* greenCards[] = {PICC_CARD1, PICC_CARD2, PICC_CARD3, PICC_CARD4, PICC_CARD5};
-byte* redCars[] = {PICC_CARD6, PICC_CARD7, PICC_CARD8, PICC_CARD9, PICC_CARD10, PICC_CARD11};
+byte greenCards[] = {PICC_CARD1, PICC_CARD2, PICC_CARD3, PICC_CARD4, PICC_CARD5};
+byte redCards[] = {PICC_CARD6, PICC_CARD7, PICC_CARD8, PICC_CARD9, PICC_CARD10, PICC_CARD11};
 
 void setup() {
 
@@ -75,24 +75,33 @@ void setup() {
 
   SPI.begin();        // Init SPI bus
 
+  pinMode(RELAY4_4, OUTPUT);
+  pinMode(RELAY4_3, OUTPUT);
+  pinMode(RELAY4_2, OUTPUT);
+  pinMode(RELAY4_1, OUTPUT);
+  pinMode(RELAY_R, OUTPUT);
+  pinMode(RELAY_L, OUTPUT);
+
+  digitalWrite(RELAY4_1, LOW);
+  digitalWrite(RELAY4_2, LOW);
+  digitalWrite(RELAY4_3, HIGH);
+  digitalWrite(RELAY_R, LOW);
+  digitalWrite(RELAY_L, HIGH);
+
   for (uint8_t reader = 0; reader < NR_OF_READERS; reader++) {
-    mfrc522[reader].PCD_Init(ssPins[reader], RST_PIN); // Init each MFRC522
+    mfrc522[reader].PCD_Init(ssPins[reader], RST_PIN); // Init each MFRC522 card
     Serial.print(F("Reader "));
     Serial.print(reader);
     Serial.print(F(": "));
     mfrc522[reader].PCD_DumpVersionToSerial();
   }
-
-    pinMode(RELAY1, OUTPUT);
-    pinMode(RELAY2, OUTPUT);
-    pinMode(RELAY3, OUTPUT);
-    pinMode(RELAY4, OUTPUT);
-    pinMode(RELAY5, OUTPUT);
-    pinMode(RELAY6, OUTPUT);
 }
 
+/**
+ * Main loop.
+ */
 void loop() {
-
+  
   for (uint8_t reader = 0; reader < NR_OF_READERS; reader++) {
     // Look for new cards
 
@@ -107,93 +116,49 @@ void loop() {
       MFRC522::PICC_Type piccType = mfrc522[reader].PICC_GetType(mfrc522[reader].uid.sak);
       Serial.println(mfrc522[reader].PICC_GetTypeName(piccType));
 
-// Check is the PICC of Classic MIFARE type (debugging purpose only)
-  if (piccType != MFRC522::PICC_TYPE_MIFARE_MINI &&  
-    piccType != MFRC522::PICC_TYPE_MIFARE_1K &&
-    piccType != MFRC522::PICC_TYPE_MIFARE_4K) {
-    Serial.println(F("Your tag is not of type MIFARE Classic."));
-    return;
-  }
-
-  byte[] greenCard = greenCards[reader];
-  byte[] redCard = redCards[reader];
-
-  if(CheckCardUID(mfrc522[reader].uid.uidByte, greenCard))
+ if(CheckCardUID(mfrc522[reader].uid.uidByte, PICC_CARD1))
+   {
+   digitalWrite(RELAY4_1, HIGH);
+   Serial.print("Relay4_1: ");
+   Serial.println(RELAY4_1);
+   digitalWrite(RELAY4_2, HIGH);
+   Serial.print("Relay4_2: ");
+   Serial.println(RELAY4_2);
+   }
+   else if(CheckCardUID(mfrc522[reader].uid.uidByte, PICC_CARD2))
   {
-    // Green Card present
-    //readerStatus[reader] = GREEN; - consider this to change this function
-    digitalWrite(RELAY1, HIGH);
-    Serial.println("GREEN LED ON")
-    }
+   digitalWrite(RELAY_R, HIGH);
+   digitalWrite(RELAY_L, LOW);
+   digitalWrite(RELAY4_3, LOW);
+   Serial.print("Relay4_3: ");
+   Serial.println(RELAY4_3);
+   Serial.print("Relay_Right: ");
+   Serial.println(RELAY_R);
+   Serial.print("Relay_Left: ");
+   Serial.println(RELAY_L);
 
-  if(CheckCardUID(mfrc522[reader].uid.uidByte, redCard))
-  {
-    // readerStatus[reader] = RED;
-     digitalWrite(RELAY1, LOW);
-     Serial.println("RED LED ON")
-  }
- 
-  /*else if(CheckCardUID(mfrc522[reader].uid.uidByte, PICC_CARD2))
-  {
-    Serial.println(F("CARD2"));
-    //int magSwitch2 = digitalRead(REED_PIN2);
-    //Serial.println(F("MagSwitch2"));
-    //Serial.println(magSwitch2);
 
-    //if(magSwitch2 == LOW)
-    digitalWrite(RELAY2, HIGH);
-  }
 
-    if(CheckCardUID(mfrc522[reader].uid.uidByte, PICC_CARD3))
-  {
-    Serial.println(F("CARD3"));
-      digitalWrite(RELAY3, HIGH);
-  }
- 
-  else if(CheckCardUID(mfrc522[reader].uid.uidByte, PICC_CARD4))
-  {
-   Serial.println(F("CARD4"));
-      digitalWrite(RELAY4, HIGH);
-  }
-
-  else if(CheckCardUID(mfrc522[reader].uid.uidByte, PICC_CARD_RESET))
-  {
-      Serial.println(F("CARD_RESET"));
-      digitalWrite(RELAY1, LOW);
-      digitalWrite(RELAY2, LOW);
-      digitalWrite(RELAY3, HIGH);
-      digitalWrite(RELAY4, HIGH);
-  }
-  */
-
+}
       // Halt PICC
       mfrc522[reader].PICC_HaltA();
       // Stop encryption on PCD
       mfrc522[reader].PCD_StopCrypto1();
     } //if (mfrc522[reader].PICC_IsNewC
   } //for(uint8_t reader
-
-  for (uint8_t reader = 0; reader < NR_OF_READERS; reader++)
-  {
-    if(readerStatus[reader] == GREEN)
-    {
-    digitalWrite(RELAY1, HIGH);
-    else{
-        digitalWrire(RELAY1, LOW);
-    }  
-    }
-  }
 }
 
-/**
+/*
  * Helper routine to dump a byte array as hex values to Serial.
  */
 void dump_byte_array(byte *buffer, byte bufferSize) {
   for (byte i = 0; i < bufferSize; i++) {
     Serial.print(buffer[i] < 0x10 ? " 0" : " ");
-    Serial.print(buffer[i], HEX);
+    Serial.print(buffer[i], DEC);
   }
+  
 }
+
 
 bool CheckCardUID(byte *buffer, byte* cardUID)
 {
