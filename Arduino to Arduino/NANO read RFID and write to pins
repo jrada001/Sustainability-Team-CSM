@@ -1,0 +1,42 @@
+// constants won't change. They're used here to set pin numbers:
+const int button1Pin = 2;  // the number of the pushbutton pin
+const int output1Pin = 11;    // the number of the LED pin
+const int button2Pin = 3;  // the number of the pushbutton pin
+const int output2Pin = 12;    // the number of the LED pin
+
+// variables will change:
+int button1State = 0;  // variable for reading the pushbutton status
+int button2State = 0;  // variable for reading the pushbutton status
+
+void setup() {
+  // initialize the LED pin as an output:
+  pinMode(output1Pin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(button1Pin, INPUT_PULLUP);
+  // initialize the LED pin as an output:
+  pinMode(output2Pin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(button2Pin, INPUT_PULLUP);
+}
+
+void loop() {
+  // read the state of the pushbutton value:
+  button1State = digitalRead(button1Pin);
+  button2State = digitalRead(button2Pin);
+
+  // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+  if (button1State == HIGH) {
+    // turn LED on:
+    digitalWrite(output1Pin, HIGH);
+  } else {
+    // turn LED off:
+    digitalWrite(output1Pin, LOW);
+  }
+  if (button2State == HIGH) {
+    // turn LED on:
+    digitalWrite(output2Pin, HIGH);
+  } else {
+    // turn LED off:
+    digitalWrite(output2Pin, LOW);
+  }
+}
