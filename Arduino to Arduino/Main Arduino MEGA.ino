@@ -32,38 +32,49 @@ void setup() {
 
 void loop() {
   //read the pushbutton value into a variable
-  bool RFID_A_1 = digitalRead(53);
-  bool RFID_A_2 = digitalRead(52);
+  bool RFID_A_4 = digitalRead(53);
+  bool RFID_A_3 = digitalRead(52);
+  bool RFID_A_2 = digitalRead(51);
+  bool RFID_A_1 = digitalRead(50);
   //print out the value of the pushbutton
-  Serial.println(RFID_A_1);
 
   // Keep in mind the pull-up means the pushbutton's logic is inverted. It goes
   // HIGH when it's open, and LOW when it's pressed. Turn on pin 13 when the
   // button's pressed, and off when it's not:
-    if (RFID_A_1 == 1) {
+
+  //GREEN
+  if (RFID_A_1 == 1) {
+    Serial.println(RFID_A_1);
+    digitalWrite(3, HIGH); //GREEN LED bright black bulbs
+    } 
+    else if (RFID_A_1 == 0) { 
+    Serial.println(RFID_A_1);
+    digitalWrite(3, LOW); 
+    
+  }
+  //RED
+  if (RFID_A_2 == 1) {
     digitalWrite(2, HIGH); //GREEN LED bright black bulbs
-    digitalWrite(3, LOW); //RED LED bright black bulbs
-    digitalWrite(4, HIGH); //RED LED costco card
-    digitalWrite(5, LOW); //GREEN LED costco card
-  } 
-  
-    else {
+    } 
+    else if (RFID_A_2 == 0) { 
     digitalWrite(2, LOW); 
-    digitalWrite(3, HIGH);
-    digitalWrite(4, LOW);
-    digitalWrite(5, HIGH);
+  }  
+  //GREEN
+  if (RFID_A_3 == 1) {
+    digitalWrite(5, HIGH);           
+    } 
+    else if (RFID_A_3 == 0){
+    digitalWrite(5, LOW);           
+    
   }
-      if (RFID_A_2 == 1) {
-    digitalWrite(6, LOW); 
-    digitalWrite(7, HIGH);
-    digitalWrite(8, LOW);
-    digitalWrite(9, HIGH);
-  } 
-  
-    else {
-    digitalWrite(6, HIGH);
-    digitalWrite(7, LOW);
-    digitalWrite(8, HIGH);
-    digitalWrite(9, LOW);
+  //RED
+  if (RFID_A_4 == 1) {
+    digitalWrite(4, HIGH); //GREEN LED costco card
+    } 
+    else if (RFID_A_4 == 0){
+    digitalWrite(4, LOW); //RED LED costco card
+    
   }
+
+
 }
