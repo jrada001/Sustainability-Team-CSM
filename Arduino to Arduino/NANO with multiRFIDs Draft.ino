@@ -18,8 +18,12 @@ byte ssPins[] = {SS_PIN1, SS_PIN2, SS_PIN3, SS_PIN4};
 
 MFRC522 rfid[NR_OF_READERS];   // Create MFRC522 instance.
 
-const byte GREEN_CARD[4] = {99, 90, 150, 13};
-const byte RED_CARD[4] = {115, 181, 132, 13};
+const byte GREEN_CARD1[4] = {99, 90, 150, 13};
+const byte RED_CARD1[4] = {115, 181, 132, 13};
+const byte GREEN_CARD2[4] = {179, 96, 69, 16};
+const byte RED_CARD2[4] = {211, 50, 93, 16};
+
+
 
 void setup() {
   Serial.begin(9600);
