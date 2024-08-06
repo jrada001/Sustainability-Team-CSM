@@ -1,15 +1,15 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define RELAY_1  A0
-#define RELAY_2  A1
-#define RELAY_3  A2
-#define RELAY_4  A3
+#define RELAY1  A0
+#define RELAY2  A1
+#define RELAY3  A2
+#define RELAY4  A3
 
 #define RST_PIN   9          
-#define SS_PIN_1  10
-#define SS_PIN_2  11
-#define SS_PIN_3  12      
+#define SS_PIN1  2
+#define SS_PIN2  3
+#define SS_PIN3  4      
 
 #define NR_OF_READERS 3
 
