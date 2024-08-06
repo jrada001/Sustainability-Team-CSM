@@ -62,10 +62,10 @@ void loop()
           digitalWrite(RELAY2, LOW);
         }
 
-        if (CheckCardUID(rfid[1].uid.uidByte, GREEN_CARD1)) {
+        if (CheckCardUID(rfid[1].uid.uidByte, GREEN_CARD)) {
           digitalWrite(RELAY3, HIGH);
           Serial.println("RFID2 GREEN");
-        } else if (CheckCardUID(rfid[1].uid.uidByte, RED_CARD1)) {
+        } else if (CheckCardUID(rfid[1].uid.uidByte, RED_CARD)) {
           digitalWrite(RELAY4, HIGH);
           Serial.println("RFID2 RED");
         } else {
