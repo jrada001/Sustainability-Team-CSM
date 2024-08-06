@@ -19,6 +19,8 @@ MFRC522 rfid[NR_OF_READERS];   // Create MFRC522 instance.
 
 const byte GREEN_CARD[4] = {99, 90, 150, 13};
 const byte RED_CARD[4] = {115, 181, 132, 13};
+const byte GREEN_CARD8[4] = {179, 96, 69, 16};
+const byte RED_CARD7[4] = {195, 197, 85, 16};
 
 void setup() 
 {
@@ -62,10 +64,10 @@ void loop()
           digitalWrite(RELAY2, LOW);
         }
 
-        if (CheckCardUID(rfid[1].uid.uidByte, GREEN_CARD)) {
+        if (CheckCardUID(rfid[1].uid.uidByte, GREEN_CARD8)) {
           digitalWrite(RELAY3, HIGH);
           Serial.println("RFID2 GREEN");
-        } else if (CheckCardUID(rfid[1].uid.uidByte, RED_CARD)) {
+        } else if (CheckCardUID(rfid[1].uid.uidByte, RED_CARD7)) {
           digitalWrite(RELAY4, HIGH);
           Serial.println("RFID2 RED");
         } else {
