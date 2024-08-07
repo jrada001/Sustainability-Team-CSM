@@ -72,9 +72,6 @@ byte ssPins[] = { SS_1_PIN, SS_2_PIN, SS_3_PIN };
 MFRC522 mfrc522[NR_OF_READERS];  // Create MFRC522 instance.
 bool cardPresent[NR_OF_READERS];
 
-/**
- * Initialize.
- */
 void setup() 
 {
 
