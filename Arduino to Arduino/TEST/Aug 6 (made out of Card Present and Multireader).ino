@@ -34,11 +34,12 @@
 
 #define RST_PIN 9   // Configurable, see typical pin layout above
 #define SS_1_PIN 2  // Configurable, take a unused pin, only HIGH/LOW required, must be different to SS 2
-#define SS_2_PIN 3  // Configurable, take a unused pin, only HIGH/LOW required, must be different to SS 1
+#define SS_2_PIN 3 // Configurable, take a unused pin, only HIGH/LOW required, must be different to SS 1
+#define SS_3_PIN 4
 
-#define NR_OF_READERS 2
-#define NR_OF_CARDS 2
-#define NR_OF_RELAYS 2
+#define NR_OF_READERS 3
+#define NR_OF_CARDS 4
+#define NR_OF_RELAYS 6
 
 int RELAY_RED1 = A0;
 int RELAY_GREEN1 = A1;
@@ -48,17 +49,25 @@ int Reader1Relays[] = { RELAY_RED1, RELAY_GREEN1 };
 int RELAY_RED2 = A2;
 int RELAY_GREEN2 = A3;
 int Reader2Relays[] = { RELAY_RED2, RELAY_GREEN2 };
-int* ReaderRelays[] = { Reader1Relays, Reader2Relays };
+int RELAY_RED3 = A4;
+int RELAY_GREEN3 = A5;
+int Reader3Relays[] = { RELAY_RED3, RELAY_GREEN3 };
+
+int* ReaderRelays[] = { Reader1Relays, Reader2Relays, Reader3Relays }; //which reader to which relay (array or arrays)
 
 const byte GREEN_CARD1[] = { 99, 90, 150, 13 };
 const byte GREEN_CARD8[] = { 179, 96, 69, 16 };
 const byte RED_CARD2[] = { 115, 181, 132, 13 };
 const byte RED_CARD7[] = { 195, 197, 85, 16 };
+const byte RED_CARD6[] = { 211, 50, 93, 16 };
+
+
+
 
 byte* greenCards[] = { GREEN_CARD1, GREEN_CARD8 };
-byte* redCards[] = { RED_CARD2, RED_CARD7 };
+byte* redCards[] = { RED_CARD2, RED_CARD7, RED_CARD6 };
 
-byte ssPins[] = { SS_1_PIN, SS_2_PIN };
+byte ssPins[] = { SS_1_PIN, SS_2_PIN, SS_3_PIN };
 
 MFRC522 mfrc522[NR_OF_READERS];  // Create MFRC522 instance.
 bool cardPresent[NR_OF_READERS];
@@ -66,15 +75,16 @@ bool cardPresent[NR_OF_READERS];
 /**
  * Initialize.
  */
-void setup() {
+void setup() 
+{
 
   Serial.begin(9600);  // Initialize serial communications with the PC
-  while (!Serial)
-    ;  // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
+  while (!Serial);  // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
 
   SPI.begin();  // Init SPI bus
 
-  for (uint8_t reader = 0; reader < NR_OF_READERS; reader++) {
+  for (uint8_t reader = 0; reader < NR_OF_READERS; reader++) 
+  {
     mfrc522[reader].PCD_Init(ssPins[reader], RST_PIN);  // Init each MFRC522 card
     Serial.print(F("Reader "));
     Serial.print(reader);
@@ -84,9 +94,10 @@ void setup() {
     cardPresent[reader] = false;
   }
 
-  for (int i = 0; i < NR_OF_READERS; i++)
-    for (int j = 0; j < NR_OF_RELAYS; j++) {
-      pinMode(ReaderRelays[i][j], OUTPUT);
+  for (int i = 0; i < NR_OF_READERS; i++) 
+    for (int j = 0; j < NR_OF_RELAYS; j++) 
+    {
+      pinMode(ReaderRelays[i][j], OUTPUT); //init pinMode for outputs to relays
     }
 }
 
@@ -110,7 +121,8 @@ void loop() {
     // }
     //delay(100);
 
-    if (PICC_IsAnyCardPresent(mfrc522[reader]) && mfrc522[reader].PICC_ReadCardSerial()) {
+    if (PICC_IsAnyCardPresent(mfrc522[reader]) && mfrc522[reader].PICC_ReadCardSerial()) 
+    {
 
       Serial.print(F("card present on RFID: "));
       Serial.print(reader);
@@ -126,7 +138,7 @@ void loop() {
 
       Serial.print(F("Reader "));
       Serial.print(reader);
-      // Show some details of the PICC (that is: the tag/card)
+      // Show some details of the PICC (that is: the tag/card) - WE DON'T NEED THIS
       Serial.print(F(": Card UID:"));
       dump_byte_array(mfrc522[reader].uid.uidByte, mfrc522[reader].uid.size);
       Serial.println();
@@ -134,16 +146,17 @@ void loop() {
       MFRC522::PICC_Type piccType = mfrc522[reader].PICC_GetType(mfrc522[reader].uid.sak);
       Serial.println(mfrc522[reader].PICC_GetTypeName(piccType));
 
-      Serial.print("CheckCards");
-      if (CheckCards(mfrc522[reader].uid.uidByte, greenCards)) {
+      Serial.print("CheckCards : .......");
+      if (CheckCards(mfrc522[reader].uid.uidByte, greenCards)) 
+      {
         Serial.println("GREEN");
-        int releayPin = ReaderRelays[reader][GREENRELAY];
-        digitalWrite(releayPin, HIGH);
+        int relayPin = ReaderRelays[reader][GREENRELAY];
+        digitalWrite(relayPin, HIGH);
         //digitalWrite(RELAY1, HIGH);
       } else if (CheckCards(mfrc522[reader].uid.uidByte, redCards)) {
         Serial.println("RED");
-                int releayPin = ReaderRelays[reader][REDRELAY];
-        digitalWrite(releayPin, HIGH);
+                int relayPin = ReaderRelays[reader][REDRELAY];
+        digitalWrite(relayPin, HIGH);
         //digitalWrite(RELAY1, HIGH);
       }
 
