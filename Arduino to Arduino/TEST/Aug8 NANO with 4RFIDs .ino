@@ -45,10 +45,15 @@ void setup() {
   }
   
 
-  pinMode(RELAY1, OUTPUT);
-  pinMode(RELAY2, OUTPUT);
-  pinMode(RELAY3, OUTPUT);
-  pinMode(RELAY4, OUTPUT);
+  pinMode(RELAY_A_G1, OUTPUT);
+  pinMode(RELAY_A_R1, OUTPUT);
+  pinMode(RELAY_A_G2, OUTPUT);
+  pinMode(RELAY_A_R2, OUTPUT);
+  pinMode(RELAY_C_G1, OUTPUT);
+  pinMode(RELAY_C_R1, OUTPUT);
+  pinMode(RELAY_C_G2, OUTPUT);
+  pinMode(RELAY_C_R2, OUTPUT);
+  
 }
 
 bool locked = false;

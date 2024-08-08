@@ -8,6 +8,7 @@
 #define RELAY_C_G2 51
 #define RELAY_C_R2 53
 
+
 //RELAYS ON BOARD D
 #define RELAY_D_G1 45
 #define RELAY_D_R1 43
@@ -23,14 +24,14 @@
 #define RFID3_D_G 6
 #define RFID3_D_R 7
 
-#define RFID1_AC_G 8
-#define RFID1_AC_R 9
-#define RFID2_AC_G 10
-#define RFID2_AC_G 11
-#define RFID3_AC_G 12
-#define RFID3_AC_G 13
-#define RFID4_AC_G 22
-#define RFID4_AC_G 24
+#define RFID1_A_G 8
+#define RFID1_A_R 9
+#define RFID2_A_G 10
+#define RFID2_A_G 11
+#define RFID1_C_G 12
+#define RFID1_C_G 13
+#define RFID2_C_G 22
+#define RFID2_C_G 24
 
 
 
@@ -40,28 +41,39 @@ void setup()
   //start serial connection
   Serial.begin(9600);
   //configure pins as an input and enable the internal pull-up resistor
+  
+// INPUT PINS FOR BOARD D
   pinMode(RFID1_D_G, INPUT_PULLUP);
   pinMode(RFID1_D_R, INPUT_PULLUP);
   pinMode(RFID2_D_G, INPUT_PULLUP);
   pinMode(RFID2_D_R, INPUT_PULLUP);
   pinMode(RFID3_D_G, INPUT_PULLUP);
   pinMode(RFID3_D_R, INPUT_PULLUP);
+// INPUT PINS FOR BOARD A and C
+  pinMode(RFID1_A_G, INPUT_PULLUP);
+  pinMode(RFID1_A_R, INPUT_PULLUP);
+  pinMode(RFID2_A_G, INPUT_PULLUP);
+  pinMode(RFID2_A_G, INPUT_PULLUP);
+  pinMode(RFID1_C_G, INPUT_PULLUP);
+  pinMode(RFID1_C_G, INPUT_PULLUP);
+  pinMode(RFID2_C_G, INPUT_PULLUP);
+  pinMode(RFID2_C_G, INPUT_PULLUP);
 
-  pinMode(RFID1_AC_G, INPUT_PULLUP);
-  pinMode(RFID1_AC_R, INPUT_PULLUP);
-  pinMode(RFID2_AC_G, INPUT_PULLUP);
-  pinMode(RFID2_AC_G, INPUT_PULLUP);
-  pinMode(RFID3_AC_G, INPUT_PULLUP);
-  pinMode(RFID3_AC_G, INPUT_PULLUP);
-  pinMode(RFID4_AC_G, INPUT_PULLUP);
-  pinMode(RFID4_AC_G, INPUT_PULLUP);
-
-  
-   
+//OUTPINS FOR BOARD D
   pinMode(RELAY_D_G1, OUTPUT);
   pinMode(RELAY_D_R1, OUTPUT);
   pinMode(RELAY_D_G2, OUTPUT);
   pinMode(RELAY_D_R2, OUTPUT);
+//OUTPINS FOR BOARD A and C
+  pinMode(RELAY_A_R1, OUTPUT);
+  pinMode(RELAY_A_G1, OUTPUT);
+  pinMode(RELAY_A_R2, OUTPUT);
+  pinMode(RELAY_A_G2, OUTPUT);
+  pinMode(RELAY_C_G1, OUTPUT);
+  pinMode(RELAY_C_R1, OUTPUT);
+  pinMode(RELAY_C_G2, OUTPUT);
+  pinMode(RELAY_C_R2, OUTPUT);
+
  
   // digitalWrite(2, LOW);
   // digitalWrite(3, LOW);
