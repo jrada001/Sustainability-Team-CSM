@@ -23,6 +23,16 @@
 #define RFID3_D_G 6
 #define RFID3_D_R 7
 
+#define RFID1_AC_G 8
+#define RFID1_AC_R 9
+#define RFID2_AC_G 10
+#define RFID2_AC_G 11
+#define RFID3_AC_G 12
+#define RFID3_AC_G 13
+#define RFID4_AC_G 22
+#define RFID4_AC_G 24
+
+
 
 
 void setup() 
@@ -36,6 +46,17 @@ void setup()
   pinMode(RFID2_D_R, INPUT_PULLUP);
   pinMode(RFID3_D_G, INPUT_PULLUP);
   pinMode(RFID3_D_R, INPUT_PULLUP);
+
+  pinMode(RFID1_AC_G, INPUT_PULLUP);
+  pinMode(RFID1_AC_R, INPUT_PULLUP);
+  pinMode(RFID2_AC_G, INPUT_PULLUP);
+  pinMode(RFID2_AC_G, INPUT_PULLUP);
+  pinMode(RFID3_AC_G, INPUT_PULLUP);
+  pinMode(RFID3_AC_G, INPUT_PULLUP);
+  pinMode(RFID4_AC_G, INPUT_PULLUP);
+  pinMode(RFID4_AC_G, INPUT_PULLUP);
+
+  
    
   pinMode(RELAY_D_G1, OUTPUT);
   pinMode(RELAY_D_R1, OUTPUT);
