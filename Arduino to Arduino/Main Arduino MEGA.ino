@@ -1,4 +1,14 @@
 
+#define RELAY_A_R1 46 //Let's pretend it is Board A and name for relay = RELAY_A_R1 where A-name of the board and R1-Red LED number 1
+#define RELAY_A_G1 48 //Let's pretend it is Board A and name for relay = RELAY_A_G1 where A-name of the board and G1-Green LED number 1
+#define RELAY_A_R2 50
+#define RELAY_A_G2 52
+#define RELAY_C_G1 47
+#define RELAY_C_R1 49
+#define RELAY_C_G2 51
+#define RELAY_C_R2 53
+
+
 
 void setup() 
 {
